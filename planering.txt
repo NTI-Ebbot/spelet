@@ -1,0 +1,18 @@
+#Start
+Fråga användaren om den vill spela(eventuellt fråga om den vill ladda ett tidigare sparat spel)
+Förklara backstoryn för användaren och hur man spelar
+
+#Alternativ i rummet
+Kolla vad användaren vill göra
+Om användaren vill kolla runt, visa vad som finns i rummet
+
+Om användaren vill inspektera något i rummet, ge mer information om det
+Ifall det går att plocka upp fråga om användaren vill plocka upp det
+Om den vill det lägg till saken i en lista
+
+Om användaren vill gå till ett annat rum, kolla om det finns något rum där och ifall det går att gå in. Byt till det rummet
+
+
+#Rum system
+Skilja på vilket rum man är i
+Kunna säga vad som finns i rummet
