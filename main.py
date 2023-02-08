@@ -1,6 +1,4 @@
 import os
-#modul
-import inventory
 from time import sleep
 import tictactoe
 
@@ -55,13 +53,29 @@ def events(event):
          player_input = input('Är du redo? Ja/Nej').lower()
          if 'ja' in player_input:
             if tictactoe.play(tictactoe.player, tictactoe.win) == True:
+               inventory.append('källarnyckel') 
                break
 
          elif 'nej' in player_input:
             print('Inspektera hinken igen när du är redo')
             break
+
+def show_inventory():
+   'Returnerar vad som finns i listan "inventory" som en string'
+   s = ', '.join(inventory)
+   if ',' in s:
+      s[s.rindex(',')] = 'och'
+      return s
+   elif s == '':
+      return 'Du har inget'
+   else:
+      return s
+
+
 #Deklration av listot, dictionaries osv
 ############################################################################################################
+
+inventory = []
 
 rooms = [
   'källaren', 'trappan', 'vardagsrummet', 'hallen', 'sovrummet', 'köket',
@@ -164,18 +178,16 @@ if __name__ == '__main__':
          player_input = [player_input, '']
 
 
-      print(player_input)
       #Kommandon
       ######################################################################################################
       commands = {
       'kolla': room_descriptions[rooms[current_room]],
       'hjälp' : controls,
       'inspektera': inspect(player_input[1]),
-      #'i' or 'väska': inventory(),
+      'i' : ', '.join(inventory),
+      'gå' : switch_rooms(player_input[1])
       
       }
-
-
       ######################################################################################################
 
       if player_input[0] in commands:
