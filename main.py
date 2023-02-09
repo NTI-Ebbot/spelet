@@ -1,7 +1,7 @@
 import os
 from time import sleep
 import tictactoe
-
+from random import choice
 
 #Deklaration av variabler
 ############################################################################################################
@@ -26,16 +26,15 @@ def inspect(item):
    'returnerar en beskrivning av föremålet om det finns'
 
    #Går igenom listan med item info och kollar om föremålet finns med
-   for i in item_info:
+   for i in item_info[current_room]:
       if item == i:
-         return item_info[item]
+         return item_info[current_room][item]
 
       elif item == '' or item == ' ':
          return f'Det specifierade inte vad du ville inspektera. '
 
 
-      else:
-         return f'Det finns ingen {item} i det här rummet. '
+   return f'Det finns ingen {item} i det här rummet. '
 
 
 def split_line_print(text, seperator, sleep_tine, end='\n'):
@@ -44,21 +43,45 @@ def split_line_print(text, seperator, sleep_tine, end='\n'):
       print(i, end=end)
       sleep(sleep_tine)
 
+def game_over(tip):
+   ''
+   os.system('cls')
+   split_line_print(f'''
+ _____                  _____             §
+|   __|___ _____ ___   |     |_ _ ___ ___ §
+|  |  | .'|     | -_|  |  |  | | | -_|  _|§
+|_____|__,|_|_|_|___|  |_____|\_/|___|_|  §
+Tips: {tip}!                             
+   ''', '§', 0.2, '')
+   exit()
 
 def events(event):
    ''
-   print('Råttan utmanar dig till ett parti 3-i-rad. \nIfall du vinner säger den att du ska få nyckeln till källardörren.')
-   while True:
-      if 'rat' in event:
-         player_input = input('Är du redo? Ja/Nej').lower()
-         if 'ja' in player_input:
-            if tictactoe.play(tictactoe.player, tictactoe.win) == True:
-               inventory.append('källarnyckel') 
+   if 'rat' in event:
+      #Frågar om man vill starta 3-i-rad. Slutar när man vinner. Frågar igen om man förlorar
+      print('Råttan utmanar dig till ett parti 3-i-rad. \n\nIfall du vinner säger den att du ska få nyckeln till källardörren.')
+      while True:
+         if 'rat' in event:
+            player_input = input('Är du redo? Ja/Nej\n').lower()
+            if 'ja' in player_input:
+               if tictactoe.play() == True:
+                  inventory.append('källarnyckel') 
+                  break
+
+            elif 'nej' in player_input:
+               print('Inspektera hinken igen när du är redo')
                break
 
+   if 'shrooms' in event:
+      while True:
+         player_input = input('Vill du äta dem? Ja/Nej\n').lower()
+         if 'ja' in player_input:
+            split_line_print('Du börjar se skumma färger och former.§Din syn börjar suddas ut.§Allting blir åter svart och du faller ihop på golvet.', '§', 1.2)
+            sleep(1)
+            game_over('Ät inte mystiska svampar')
          elif 'nej' in player_input:
-            print('Inspektera hinken igen när du är redo')
             break
+
 
 def show_inventory():
    'Returnerar vad som finns i listan "inventory" som en string'
@@ -66,11 +89,31 @@ def show_inventory():
    if ',' in s:
       s[s.rindex(',')] = 'och'
       return s
-   elif s == '':
+   elif inventory.__len__() == 0:
       return 'Du har inget'
    else:
       return s
 
+
+def change_room(direction):
+   ''
+   global current_room
+   global item_info
+
+   if 'nästa' in direction:
+      if current_room == 0:
+         if 'källarnyckel' in  inventory:
+            current_room += 1
+            return 'Du låser upp och öppnar dörren och går igenom.'
+         else:
+            return 'Dörren är låst. Du behöver en nyckel för att öppna den. '
+
+   
+
+   if 'tillbak' in direction:
+      if current_room == 1:
+         current_room -= 1
+         return 'Du går tillbaka.'
 
 #Deklration av listot, dictionaries osv
 ############################################################################################################
@@ -79,13 +122,13 @@ inventory = []
 
 rooms = [
   'källaren', 'trappan', 'vardagsrummet', 'hallen', 'sovrummet', 'köket',
-  'garaget'
+  'garaget', ''
 ]
 
 room_descriptions = {
   rooms[0]:
-  'Du kollar runt och ser att du är i en gammal mörk källare. I källaren ser du en tavla och en hink på golvet. Det finns en dörr som leds ut ur rummet.',
-  rooms[1]: 'Trappan',
+  'Du kollar runt och ser att du är i en dammig mörk gammal källare. Förutom de mystisak svamparna i ett av hörnen ser du  en tavla och en hink på golvet. Du ser också att finns en dörr längst bort i rummet.\n',
+  rooms[1]: 'Du kollar runt och är på en gammal trappa. Varje steg du tar ger ett knakande ljud. Framför dig är en dörr.\n',
   rooms[2]: 'Vardagsrummet',
   rooms[3]: 'Hallen',
   rooms[4]: 'Sovrummet',
@@ -93,11 +136,16 @@ room_descriptions = {
   rooms[6]: 'Garaget'
 }
 
+paintings = ['Den föreställer fiskargubben', '', '']
 
-item_info = {
-  'hink' : 'Hinken ser gammaö och rostig ut. I den hittar en råtta. event rat',
-  '': '',
-}
+item_info = [
+   {
+   'tavla': 'Den föreställer fiskargubben\n',   
+   'hink' : 'Hinken ser gammal och rostig ut. I den hittar en råtta. event rat',
+   'svamp' : 'Det är tre små svampar. Det ser nästan ut som att de lyser i mörkret. event shrooms'
+   },
+{},
+{}]
 
 
 
@@ -185,7 +233,7 @@ if __name__ == '__main__':
       'hjälp' : controls,
       'inspektera': inspect(player_input[1]),
       'i' : ', '.join(inventory),
-      'gå' : switch_rooms(player_input[1])
+      'gå' : change_room(player_input[1])
       
       }
       ######################################################################################################

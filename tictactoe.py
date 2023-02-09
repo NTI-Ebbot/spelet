@@ -64,19 +64,30 @@ def check_win():
     else:
         game=running
 
-def play(player, win):
+def play():
     'startar tre-i-rad'
+    global player
+    global win
+    global board
+    global game
+
+
     while(game == running):
         os.system('cls')
         draw_board()
         if(player % 2 != 0):
             print('Din tur')
             mark = 'X'
-            choice = int(input('Vart vill du placera? 1-9\n'))
+            choice = input('Vart vill du placera? 1-9\n')
         else:
             print('Råttan')
             mark = 'O'
             choice = random.randint(1,9)
+        try:
+            choice = int(choice)
+        except:
+            continue
+
         if(check_position(choice)):
             board[choice] = mark
             player+=1
@@ -85,14 +96,27 @@ def play(player, win):
     os.system('cls')
     draw_board()
     if(game==draw):
-        print('Oavgjort')
+        print('Oavgjort\nDu kan köra igen.')
+        board = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
+        game = running
+        player = 1
+
     elif(game==win):
         player-=1
         if(player%2!=0):
-            print('Du vann!\nDu får nu nyckeln')
-            return True
+            print('Du vann!\nDu får nu nyckeln\n')
+            return True 
+
         else:
-            print('Du förlorade.\nDu kan köra igen.')  
+            print('Du förlorade.\nDu kan köra igen.') 
+            board = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
+            game = running
+            player = 1
 
 if __name__ == '__main__':
-    play(player, win)
+    while True:
+        if 'j' in input('Spela j/n\n'.lower()):
+            if play() == True:
+                break
+        else:
+            break
