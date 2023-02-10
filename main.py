@@ -1,7 +1,7 @@
 import os
 from time import sleep
 import tictactoe
-from random import choice
+
 
 #Deklaration av variabler
 ############################################################################################################
@@ -15,6 +15,9 @@ Skriv [kolla] för att kolla dig omkring i rummet,
 [inspektera] för att titta närmare på eventuella föremål i rummen,
 [i] för att kolla vilka föremål du har(inventory),
 [hjälp] för att se kontrollerna igen,
+[gå] till nästa eller gå tillbaka för att gå till nästa eller det föregående rummt.
+Ifall det finns flera väger kan du gå höger eller vänster.
+
 
    '''
 backstory = 'Du festade sent igår på en klubb. Du mådde inte så bra så att du försökte ta dig hem men du var för påverkad för att köra så du gick hem. På vägen hem ser du din farbror i en bil. Du frågar om en skjuts hem. Sen får du ett slag mot huvudet och vaknar i ett kolsvart rum. Bredvid dig finns det en ficklampa. Då inser du att du är i en källare...'
@@ -31,10 +34,10 @@ def inspect(item):
          return item_info[current_room][item]
 
       elif item == '' or item == ' ':
-         return f'Det specifierade inte vad du ville inspektera. '
+         return f'Det specifierade inte vad du ville inspektera. \n'
 
 
-   return f'Det finns ingen {item} i det här rummet. '
+   return f'Det finns ingen {item} i det här rummet. \n'
 
 
 def split_line_print(text, seperator, sleep_tine, end='\n'):
@@ -54,6 +57,8 @@ def game_over(tip):
 Tips: {tip}!                             
    ''', '§', 0.2, '')
    exit()
+
+
 
 def events(event):
    ''
@@ -99,21 +104,33 @@ def change_room(direction):
    ''
    global current_room
    global item_info
-
-   if 'nästa' in direction:
+   if direction != None:
       if current_room == 0:
-         if 'källarnyckel' in  inventory:
-            current_room += 1
-            return 'Du låser upp och öppnar dörren och går igenom.'
-         else:
-            return 'Dörren är låst. Du behöver en nyckel för att öppna den. '
+         if 'nästa' in direction:
+            if 'källarnyckel' in  inventory:
+               current_room += 1
+               return 'Du låser upp och öppnar dörren och går igenom.\n'
+            else:
+               return 'Dörren är låst. Du behöver en nyckel för att öppna den.\n'
 
-   
-
-   if 'tillbak' in direction:
       if current_room == 1:
-         current_room -= 1
-         return 'Du går tillbaka.'
+         return 'Du går upp för trappan och genom dörren.\n'
+
+      if current_room == 0 or current_room == 1 or current_room == 2:
+         if 'tillbak' in direction:
+            if current_room == 1:
+               current_room -= 1
+               return 'Du går tillbaka.\n'
+
+      if current_room == 1:
+         if 'höger' in direction:
+            current_room = 6
+            return 'Du går in genom dörren till höger.\n'
+         elif 'vänster' in direction:
+            current_room += 1
+      else:
+         return 'Du måste säga vart du vill gå.\n'
+
 
 #Deklration av listot, dictionaries osv
 ############################################################################################################
@@ -129,14 +146,14 @@ room_descriptions = {
   rooms[0]:
   'Du kollar runt och ser att du är i en dammig mörk gammal källare. Förutom de mystisak svamparna i ett av hörnen ser du  en tavla och en hink på golvet. Du ser också att finns en dörr längst bort i rummet.\n',
   rooms[1]: 'Du kollar runt och är på en gammal trappa. Varje steg du tar ger ett knakande ljud. Framför dig är en dörr.\n',
-  rooms[2]: 'Vardagsrummet',
-  rooms[3]: 'Hallen',
-  rooms[4]: 'Sovrummet',
-  rooms[5]: 'Köket',
-  rooms[6]: 'Garaget'
+  rooms[2]: 'Du står i en lång hall. Framför dig är en byrå. ',
+  rooms[3]: 'Du ser två dörrar, en till vänster och en till höger',
+  rooms[4]: 'Vardagsrummet',
+  rooms[5]: 'Sovrummet',
+  rooms[6]: 'Köket',
+  rooms[7]: 'Garaget'
 }
 
-paintings = ['Den föreställer fiskargubben', '', '']
 
 item_info = [
    {
@@ -144,7 +161,9 @@ item_info = [
    'hink' : 'Hinken ser gammal och rostig ut. I den hittar en råtta. event rat',
    'svamp' : 'Det är tre små svampar. Det ser nästan ut som att de lyser i mörkret. event shrooms'
    },
-{},
+   {
+   'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305',
+   },
 {}]
 
 
@@ -158,43 +177,43 @@ item_info = [
 if __name__ == '__main__':
    os.system('cls')
 
-   split_line_print(backstory, '. ', 1.3)
+   # split_line_print(backstory, '. ', 1.3)
 
-   sleep(2)
-   os.system('cls')
-   sleep(0.1)
+   # sleep(2)
+   # os.system('cls')
+   # sleep(0.1)
 
-   split_line_print('''
-                  Välkommen till
-   _  _  (_)(_)  __    __      __    ____  ____  _  _ §
-   ( )/ )  /__\  (  )  (  )    /__\  (  _ \( ___)( \( )§
-   )  (  /(__)\  )(__  )(__  /(__)\  )   / )__)  )  ( §
-   (_)\_)(__)(__)(____)(____)(__)(__)(_)\_)(____)(_)\_)§''', '§', 0.1, '')
+   # split_line_print('''
+   #                Välkommen till
+   # _  _  (_)(_)  __    __      __    ____  ____  _  _ §
+   # ( )/ )  /__\  (  )  (  )    /__\  (  _ \( ___)( \( )§
+   # )  (  /(__)\  )(__  )(__  /(__)\  )   / )__)  )  ( §
+   # (_)\_)(__)(__)(____)(____)(__)(__)(_)\_)(____)(_)\_)§''', '§', 0.1, '')
 
-   sleep(0.25)
+   # sleep(0.25)
 
-   split_line_print('''
+   # split_line_print('''
                                                 
                                                 
                                                 
-            ................                  §
-         ......*.,.,,,.,.,......              §
-      ........,,.,,,,,,,,...........          §
-      .....,,,,,**,,(.ma (.          , .       § 
-      ......,,,,,***(,.((/,        * .        §
-      .....,,,,,,***(. (*//*.      * ...      §
-      ....,,,,,,,***(. (*//*.      / ...      §
-      ......,,,,,,**(. (*//*.      / ....     §
-         .......,,,,,,(. (*//*.      * .....   § 
-         ....,,,,,,,/. (*//*. *    * .....    §
-            ....,.,,,/. ((//*/.     * ...      §
-            .. .......*. ((//*.      , ...      §
-               ......*. ((//*.      , ..       §
-                  ...,. */**..      .          §
-                     ................          §
-   ''', '§', 0.1, '')
+   #          ................                  §
+   #       ......*.,.,,,.,.,......              §
+   #    ........,,.,,,,,,,,...........          §
+   #    .....,,,,,**,,(.ma (.          , .       § 
+   #    ......,,,,,***(,.((/,        * .        §
+   #    .....,,,,,,***(. (*//*.      * ...      §
+   #    ....,,,,,,,***(. (*//*.      / ...      §
+   #    ......,,,,,,**(. (*//*.      / ....     §
+   #       .......,,,,,,(. (*//*.      * .....   § 
+   #       ....,,,,,,,/. (*//*. *    * .....    §
+   #          ....,.,,,/. ((//*/.     * ...      §
+   #          .. .......*. ((//*.      , ...      §
+   #             ......*. ((//*.      , ..       §
+   #                ...,. */**..      .          §
+   #                   ................          §
+   # ''', '§', 0.1, '')
 
-   sleep(0.5)
+   # sleep(0.5)
 
 
 
@@ -233,7 +252,7 @@ if __name__ == '__main__':
       'hjälp' : controls,
       'inspektera': inspect(player_input[1]),
       'i' : ', '.join(inventory),
-      'gå' : change_room(player_input[1])
+      'gå' : change_room(player_input[1]),
       
       }
       ######################################################################################################
