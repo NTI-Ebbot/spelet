@@ -146,12 +146,12 @@ room_descriptions = {
   rooms[0]:
   'Du kollar runt och ser att du är i en dammig mörk gammal källare. Förutom de mystisak svamparna i ett av hörnen ser du  en tavla och en hink på golvet. Du ser också att finns en dörr längst bort i rummet.\n',
   rooms[1]: 'Du kollar runt och är på en gammal trappa. Varje steg du tar ger ett knakande ljud. Framför dig är en dörr.\n',
-  rooms[2]: 'Du står i en lång hall. Framför dig är en byrå. ',
+  rooms[2]: 'Du står i en hall i en lång hall med alla fönster täckta av fastspikade träplankor så att det är ingen chans för dig att komma ut. Framför dig är en stort skåp. Du kan fortsäta höger eller vänster genom hallen.',
   rooms[3]: 'Du ser två dörrar, en till vänster och en till höger',
-  rooms[4]: 'Vardagsrummet',
-  rooms[5]: 'Sovrummet',
-  rooms[6]: 'Köket',
-  rooms[7]: 'Garaget'
+  rooms[4]: 'Du låser upp dörren befinner dig i ett mörkt rum. Du ser din farbror sovandes på sin säng i hörnet av rummet.',
+  rooms[5]: 'Du går och befinner dig i köket. Du ser massor av knivmärken runt hela köksväggarna. Det som står ut mest i köket är ett kylskåp.',
+  rooms[6]: 'Du befinner dig i vardagsrummet där alla fönster är inspikade av träplankor. Det som står ut mest i rummet är en tavla sne tavla och en stor hylla.',
+  rooms[7]: 'Du befinner dig i garaget men du ser ingen utgång. Du känner lukten bitter bensin lukt. Det som står ut mest är den blåa bilen framför dig.'
 }
 
 
@@ -162,8 +162,22 @@ item_info = [
    'svamp' : 'Det är tre små svampar. Det ser nästan ut som att de lyser i mörkret. event shrooms'
    },
    {
-   'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305',
+   'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod.'
    },
+   {
+   }
+   {
+   'farbror' : 'Du går fram smyger fram mot din farbror för en närmare titt. Det sista steget du tar ger ett högt knackade ljud från trägolvet och väcker farbrorn så att han reser sig genast.'
+   }
+   {
+   'kylskåp' : 'Du öppnar kylskåpet och finner den fylld med ost. Undra vad du kan göra med osten?'
+   }
+   {
+   'tavla' : 'Du inspekterar tavlan av Lama. Men du märker att den inte sitter helt rätt och tar av tavlan från väggen. Bakom tavlan finner du ett skåp som kräver en kod. Vad kan koden vara?',
+   'hylla' : 'Du inspekterar hyllan och finner en papperslapp. På lappen står det "Insert matte uppgift". Vad kan detta vara för?'
+   }
+   
+   
 {}]
 
 
