@@ -72,6 +72,7 @@ def victory(victory_splash):
                         |___|§
 {victory_splash}
    ''', '§', 0.2, '')
+   exit()
 
 
 
@@ -97,8 +98,12 @@ def events(event):
       while True:
          player_input = input('Vill du byta osten för nyckeln? Ja/Nej\n').lower()
          if 'ja' in player_input:
-            print()
-
+            print('Du ger osten till råttan och får nyckeln.\n')
+            inventory.append('husnyckel')
+            break
+         elif 'nej' in player_input:
+            print('Du kan komma tillbaka om du ångrar dig.\n')
+            break
 
    if 'shrooms' in event:
       while True:
@@ -158,7 +163,7 @@ def events(event):
          player_input = input('Vill du skriva in koden? Ja/Nej\n').lower()
          if 'ja' in player_input:
             player_input = input('Vad är koden?')
-            if '0327' in player_input:
+            if '3327' in player_input:
                print('Korrekt kod. Du hittade en bilnyckel')
                inventory.append('bilnyckel')
             else:
@@ -166,6 +171,19 @@ def events(event):
          elif 'nej' in player_input:
             print('Det kanske finns något viktigt bakom låset')
             break
+
+
+   if 'car' in event:
+      while True:
+         player_input = input('Vill du sätta dig i bilen? Ja/Nej\n').lower()
+         if 'ja' in player_input and 'bilnyckel' in inventory:
+            split_line_print('Du låser upp bilen men nyckeln och startar bilen.§Du trampar ner på gas pedalen och kör igenom garagedörren och lämnar huset.', '§', 1.2)
+            sleep(1)
+            victory('Du lyckades fly med bilen och slipper nu betala trängselskatt')
+         if 'ja' in player_input:
+            print('Du måste hitta bilnyckeln om du vill använda bilen')
+         elif 'nej' in player_input:
+            print('ok')
 
 
 def show_inventory():
@@ -225,13 +243,19 @@ def change_room(direction):
 
 
       elif 'vänster' in direction and 'husnyckel' in inventory:
-         return 'Du låser upp dörren och flyr ifrån huset.\n'
+         victory('Du låser upp dörren och flyr ifrån huset.')
+         return ''
+
 
 
    if current_room == 5:
       if 'nästa' in direction:
          current_room += 1
          return 'Du går genom dörren ut ur köket.\n '
+
+      elif 'tillbak' in direction:
+         current_room = 2
+         return 'Du går tillbaka.\n'
       
 
    return 'Det finns inget rum där eller så sa du inte vart du ville gå. \n'
@@ -264,18 +288,20 @@ item_info = [{
    'hink' : 'Hinken ser gammal och rostig ut. I den hittar en råtta. event rat',
    'svamp' : 'Det är tre små svampar. Det ser nästan ut som att de lyser i mörkret. event shrooms'
    },
+   {},
    {
-   'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod.'
+      'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod.\n'
    },
    {},
    {
-      'farbror' : 'Du går fram smyger fram mot din farbror för en närmare titt. Det sista steget du tar ger ett högt knackade ljud från trägolvet och väcker farbrorn så att han reser sig genast.\n event uncle'},
+      'farbror' : 'Du går fram smyger fram mot din farbror för en närmare titt. Det sista steget du tar ger ett högt knackade ljud från trägolvet och väcker farbrorn så att han reser sig genast.\n event uncle'
+   },
    {
       'kylskåp' : 'Du öppnar kylskåpet och finner den fylld med ost. Undra vad du kan göra med osten? event cheese'
    },
    {
       'tavla' : 'Du inspekterar tavlan. Den föreställer en lama. Du märker att den inte sitter helt rätt och tar av tavlan från väggen. Bakom tavlan finner du ett skåp som kräver en kod. Vad kan koden vara? event painting',
-      'hylla' : 'Du inspekterar hyllan och finner en papperslapp. På lappen står det "Insert matte uppgift". Vad kan detta vara för?\n'
+      'hylla' : 'Du inspekterar hyllan och finner en papperslapp. På lappen står det "3(597 + 16^2 * 2)". Vad kan detta vara för?\n'
    },
    {}]
 
