@@ -188,7 +188,8 @@ def events(event):
             if 'ja' in player_input:
                print('Du måste hitta bilnyckeln om du vill använda bilen')
             elif 'nej' in player_input:
-               print('ok')
+               print('Du kan komma tillbaka om du ångrar dig.\n')
+               break
          else:
             print('Du behöver en bilnyckel för att öppna bilen.\n')
             break
