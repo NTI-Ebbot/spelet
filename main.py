@@ -99,6 +99,34 @@ def events(event):
             game_over('Ät inte mystiska svampar')
          elif 'nej' in player_input:
             break
+            
+  if 'uncle' in event:
+      while True:
+         player_input = input('Vill du anfalla farbrorn? Ja/Nej\n').lower()
+         if 'ja' in player_input and 'pistol' in inventory:
+            split_line_print('Du riktar din pistol mot din farbrors huvud samtidigt ni stirrar varandra i ögonen.§Du sätter ett skott i hans huvud och efter ett ögonblick faller han ihop.§Hans lik är stilla på sängen och i hans ficka hittar du en nyckel till ytterdörren.', '§', 3)
+            sleep(1)
+            victory('Du besegrade din farbror och flydde polisen!')
+         elif 'ja' in player_input:
+            split_line_print('Ni stirrar var andra i ögonen.§I nästa ögonblick ger han av ett högt skrik och hoppar på dig med sina händerna på din nacke.§Allting blir svart.', '§', 3)
+            sleep(1)
+            game_over('Du kanske behöver ett vapen för att besegra farbrorn')
+         elif 'nej' in player_input:
+            print('Du kan möta honom när du är redo')
+            break
+            
+   if 'cheese' in event:
+      while True:
+         print('Du öppnar kylskåpet och finner den fylld med ost.')
+         player_input = input('Vill du ta upp osten? Ja/Nej\n').lower()
+         if 'ja' in player_input:
+            print('Undra vad du ska göra med osten?')
+            break
+         if 'nej' in player_input:
+            print('Osten kanske är viktig')
+            break
+            
+          
 
 
 def show_inventory():
