@@ -128,18 +128,18 @@ def events(event):
             sleep(1)
             game_over('Du kanske behöver ett vapen för att besegra farbrorn')
          elif 'nej' in player_input:
-            print('Du kan möta honom när du är redo')
+            print('Du kan möta honom när du är redo\n')
             break
             
 
    if 'cheese' in event:
       while True:
-         print('Du öppnar kylskåpet och finner den fylld med ost.')
          player_input = input('Vill du ta upp osten? Ja/Nej\n').lower()
          if 'ja' in player_input:
-            print('Undra vad du ska göra med osten?')
+            print('\nUndra om någon skulle tycka om osten?')
             inventory.append('ost') 
             break
+
          elif 'nej' in player_input:
             print('Osten kanske är viktig')
             break
@@ -150,10 +150,13 @@ def events(event):
          if 'ja' in player_input:
             player_input = input('Vad är koden?')
             if '8305' in player_input:
-               print('Korrekt kod. Du hittade en pistol')
+               print('Korrekt kod. Du hittade en pistol\n')
                inventory.append('pistol')
+               break
+
             else:
-               print('Inkorrekt kod')
+               print('Inkorrekt kod\n')
+
          elif 'nej' in player_input:
             print('Det kanske finns något viktigt bakom låset')
             break
@@ -162,28 +165,32 @@ def events(event):
     while True:
          player_input = input('Vill du skriva in koden? Ja/Nej\n').lower()
          if 'ja' in player_input:
-            player_input = input('Vad är koden?')
+            player_input = input('Vad är koden? ')
             if '3327' in player_input:
-               print('Korrekt kod. Du hittade en bilnyckel')
+               print('Korrekt kod. Du hittade en bilnyckel\n')
                inventory.append('bilnyckel')
+               break
             else:
-               print('Inkorrekt kod')
+               print('Inkorrekt kod\n')
          elif 'nej' in player_input:
-            print('Det kanske finns något viktigt bakom låset')
+            print('Det kanske finns något viktigt bakom låset\n')
             break
 
 
    if 'car' in event:
       while True:
-         player_input = input('Vill du sätta dig i bilen? Ja/Nej\n').lower()
-         if 'ja' in player_input and 'bilnyckel' in inventory:
-            split_line_print('Du låser upp bilen men nyckeln och startar bilen.§Du trampar ner på gas pedalen och kör igenom garagedörren och lämnar huset.', '§', 1.2)
-            sleep(1)
-            victory('Du lyckades fly med bilen och slipper nu betala trängselskatt')
-         if 'ja' in player_input:
-            print('Du måste hitta bilnyckeln om du vill använda bilen')
-         elif 'nej' in player_input:
-            print('ok')
+         if 'bilnyckel' in inventory:   
+            player_input = input('Vill du sätta dig i bilen? Ja/Nej\n').lower()
+            if 'ja' in player_input:
+               split_line_print('Du låser upp bilen men nyckeln och startar bilen.§Du trampar ner på gas pedalen och kör igenom garagedörren och lämnar huset.', '§', 1.2)
+               sleep(1)
+               victory('Du lyckades fly med bilen och slipper nu betala trängselskatt')
+            if 'ja' in player_input:
+               print('Du måste hitta bilnyckeln om du vill använda bilen')
+            elif 'nej' in player_input:
+               print('ok')
+         else:
+            print('Du behöver en bilnyckel för att öppna bilen.\n')
 
 
 def show_inventory():
@@ -219,7 +226,7 @@ def change_room(direction):
          return 'Du går upp för trappan och genom dörren.\n'
 
    if 'tillbak' in direction:
-      if current_room == 1 or current_room == 2 or current_room  == 3:
+      if current_room == 1 or current_room == 2 or current_room  == 3 or current_room == 4 or current_room == 6:
          current_room -= 1
          return 'Du går tillbaka.\n'
 
@@ -230,6 +237,7 @@ def change_room(direction):
          return 'Du går in genom dörren till höger.\n'
       elif 'vänster' in direction:
          current_room += 1
+         return 'Du går åt vänster'
 
 
    if current_room == 3:
@@ -244,19 +252,26 @@ def change_room(direction):
 
       elif 'vänster' in direction and 'husnyckel' in inventory:
          victory('Du låser upp dörren och flyr ifrån huset.')
-         return ''
 
 
 
    if current_room == 5:
-      if 'nästa' in direction:
+      if 'vänster' in direction:
          current_room += 1
-         return 'Du går genom dörren ut ur köket.\n '
+         return 'Du går genom den vänstra dörren.\n '
+
+      elif 'höger' in direction:
+         current_room = 7
+         return 'Du går genom den högra dörren.\n'
 
       elif 'tillbak' in direction:
          current_room = 2
          return 'Du går tillbaka.\n'
       
+   if current_room == 7:
+      if 'tillbak' in direction:
+         current_room = 5
+         return 'Du går tillbaka'
 
    return 'Det finns inget rum där eller så sa du inte vart du ville gå. \n'
 
@@ -274,10 +289,10 @@ room_descriptions = {
   rooms[0]:
   'Du kollar runt och ser att du är i en dammig mörk gammal källare. Förutom de mystisak svamparna i ett av hörnen ser du  en tavla och en hink på golvet. Du ser också att finns en dörr längst bort i rummet.\n',
   rooms[1]: 'Du kollar runt och är på en gammal trappa. Varje steg du tar ger ett knakande ljud. Framför dig är en dörr.\n',
-  rooms[2]: 'Du står i en hall i en lång hall med alla fönster täckta av fastspikade träplankor så att det är ingen chans för dig att komma ut. Framför dig är en stort skåp. Du kan fortsäta höger eller vänster genom hallen.',
+  rooms[2]: 'Du står i en hall i en lång hall med alla fönster täckta av fastspikade träplankor så att det är ingen chans för dig att komma ut. Framför dig är en stort skåp. Du kan fortsäta höger eller vänster genom hallen.\n',
   rooms[3]: 'Du ser två dörrar, en till vänster och en till höger.\n',
   rooms[4]: 'Du befinner dig i ett mörkt rum. Du ser din farbror sovandes på sin säng i hörnet av rummet.\n',
-  rooms[5]: 'Du befinner dig i köket. Du ser massor av knivmärken runt hela köksväggarna. Det som står ut mest i köket är ett kylskåp.\n',
+  rooms[5]: 'Du befinner dig i köket. Du ser massor av knivmärken runt hela köksväggarna. Det som står ut mest i köket är ett kylskåp. Det finns en döör åt vänster och en åt höger.\n',
   rooms[6]: 'Du befinner dig i vardagsrummet där alla fönster är inspikade av träplankor. Det som står ut mest i rummet är en tavla sne tavla och en stor hylla.\n',
   rooms[7]: 'Du befinner dig i garaget men du ser ingen utgång. Du känner lukten bitter bensin lukt. Det som står ut mest är den blåa bilen framför dig.\n'
 }
@@ -290,7 +305,7 @@ item_info = [{
    },
    {},
    {
-      'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod.\n'
+      'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod. event cabinet'
    },
    {},
    {
@@ -303,7 +318,9 @@ item_info = [{
       'tavla' : 'Du inspekterar tavlan. Den föreställer en lama. Du märker att den inte sitter helt rätt och tar av tavlan från väggen. Bakom tavlan finner du ett skåp som kräver en kod. Vad kan koden vara? event painting',
       'hylla' : 'Du inspekterar hyllan och finner en papperslapp. På lappen står det "3(597 + 16^2 * 2)". Vad kan detta vara för?\n'
    },
-   {}]
+   {
+      'bil' : ''
+   }]
 
 
 
@@ -316,43 +333,43 @@ item_info = [{
 if __name__ == '__main__':
    os.system('cls')
 
-   # split_line_print(backstory, '. ', 1.3)
+   split_line_print(backstory, '. ', 1.3)
 
-   # sleep(2)
-   # os.system('cls')
-   # sleep(0.1)
+   sleep(2)
+   os.system('cls')
+   sleep(0.1)
 
-   # split_line_print('''
-   #                Välkommen till
-   # _  _  (_)(_)  __    __      __    ____  ____  _  _ §
-   # ( )/ )  /__\  (  )  (  )    /__\  (  _ \( ___)( \( )§
-   # )  (  /(__)\  )(__  )(__  /(__)\  )   / )__)  )  ( §
-   # (_)\_)(__)(__)(____)(____)(__)(__)(_)\_)(____)(_)\_)§''', '§', 0.1, '')
+   split_line_print('''
+                  Välkommen till
+   _  _  (_)(_)  __    __      __    ____  ____  _  _ §
+   ( )/ )  /__\  (  )  (  )    /__\  (  _ \( ___)( \( )§
+   )  (  /(__)\  )(__  )(__  /(__)\  )   / )__)  )  ( §
+   (_)\_)(__)(__)(____)(____)(__)(__)(_)\_)(____)(_)\_)§''', '§', 0.1, '')
 
-   # sleep(0.25)
+   sleep(0.25)
 
-   # split_line_print('''
+   split_line_print('''
                                                 
                                                 
                                                 
-   #          ................                  §
-   #       ......*.,.,,,.,.,......              §
-   #    ........,,.,,,,,,,,...........          §
-   #    .....,,,,,**,,(.ma (.          , .       § 
-   #    ......,,,,,***(,.((/,        * .        §
-   #    .....,,,,,,***(. (*//*.      * ...      §
-   #    ....,,,,,,,***(. (*//*.      / ...      §
-   #    ......,,,,,,**(. (*//*.      / ....     §
-   #       .......,,,,,,(. (*//*.      * .....   § 
-   #       ....,,,,,,,/. (*//*. *    * .....    §
-   #          ....,.,,,/. ((//*/.     * ...      §
-   #          .. .......*. ((//*.      , ...      §
-   #             ......*. ((//*.      , ..       §
-   #                ...,. */**..      .          §
-   #                   ................          §
-   # ''', '§', 0.1, '')
+            ................                  §
+         ......*.,.,,,.,.,......              §
+      ........,,.,,,,,,,,...........          §
+      .....,,,,,**,,(.ma (.          , .       § 
+      ......,,,,,***(,.((/,        * .        §
+      .....,,,,,,***(. (*//*.      * ...      §
+      ....,,,,,,,***(. (*//*.      / ...      §
+      ......,,,,,,**(. (*//*.      / ....     §
+         .......,,,,,,(. (*//*.      * .....   § 
+         ....,,,,,,,/. (*//*. *    * .....    §
+            ....,.,,,/. ((//*/.     * ...      §
+            .. .......*. ((//*.      , ...      §
+               ......*. ((//*.      , ..       §
+                  ...,. */**..      .          §
+                     ................          §
+   ''', '§', 0.1, '')
 
-   # sleep(0.5)
+   sleep(0.5)
 
 
 
@@ -396,7 +413,7 @@ if __name__ == '__main__':
       
       }
       ######################################################################################################
-      print(current_room)
+
       if player_input[0] in commands:
          if 'event' in str(commands[player_input[0]]):
             player_input = commands[player_input[0]].split('event')
