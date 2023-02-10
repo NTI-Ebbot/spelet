@@ -46,6 +46,7 @@ def split_line_print(text, seperator, sleep_tine, end='\n'):
       print(i, end=end)
       sleep(sleep_tine)
 
+
 def game_over(tip):
    'game over skärm med ett tips baserat på hur du förlorade'
    os.system('cls')
@@ -59,6 +60,7 @@ Tips: {tip}!
    exit()
 
 
+
 def victory(victory_splash):
    'victory skärm med en text om hur du vann'
    os.system('cls')
@@ -69,13 +71,13 @@ def victory(victory_splash):
  \___/|_|___|_| |___|_| |_  |§
                         |___|§
 {victory_splash}
-   ''', '§', 0.2)
+   ''', '§', 0.2, '')
 
 
 
 def events(event):
    ''
-   if 'rat' in event:
+   if 'rat' in event and 'ost' not in inventory:
       #Frågar om man vill starta 3-i-rad. Slutar när man vinner. Frågar igen om man förlorar
       print('Råttan utmanar dig till ett parti 3-i-rad. \n\nIfall du vinner säger den att du ska få nyckeln till källardörren.')
       while True:
@@ -90,6 +92,13 @@ def events(event):
                print('Inspektera hinken igen när du är redo')
                break
 
+   elif 'rat' in event and 'ost' in inventory:
+      print('Råttan känner lukten av osten och frågar upphetsat om du vill byta osten för en nyckel som den hittat.')
+      while True:
+         player_input = input('Vill du byta osten för nyckeln? Ja/Nej\n').lower()
+         if 'ja' in player_input:
+            print()
+
    if 'shrooms' in event:
       while True:
          player_input = input('Vill du äta dem? Ja/Nej\n').lower()
@@ -100,7 +109,8 @@ def events(event):
          elif 'nej' in player_input:
             break
             
-  if 'uncle' in event:
+
+   if 'uncle' in event:
       while True:
          player_input = input('Vill du anfalla farbrorn? Ja/Nej\n').lower()
          if 'ja' in player_input and 'pistol' in inventory:
@@ -115,6 +125,7 @@ def events(event):
             print('Du kan möta honom när du är redo')
             break
             
+
    if 'cheese' in event:
       while True:
          print('Du öppnar kylskåpet och finner den fylld med ost.')
@@ -126,7 +137,6 @@ def events(event):
             print('Osten kanske är viktig')
             break
             
-          
 
 
 def show_inventory():
@@ -143,8 +153,10 @@ def show_inventory():
 
 def change_room(direction):
    'byter till rum baseat på vad spelaren'
+
    global current_room
    global item_info
+
 
    if current_room == 0:
       if 'nästa' in direction:
@@ -172,22 +184,27 @@ def change_room(direction):
       elif 'vänster' in direction:
          current_room += 1
 
+
    if current_room == 3:
       if 'höger' in direction:
          current_room += 1
          return 'Du går in genom dörren åt höger. \n'
       
+
       elif 'vänster' in direction and 'husnyckel' not in inventory:
          return 'Ser ut som ytterdörren, men den är låst. Du kanske kan hitta nyckeln någonstans.\n'
 
+
       elif 'vänster' in direction and 'husnyckel' in inventory:
          return 'Du låser upp dörren och flyr ifrån huset.\n'
+
 
    if current_room == 5:
       if 'nästa' in direction:
          current_room += 1
          return 'Du går genom dörren ut ur köket.\n '
       
+
    return 'Det finns inget rum där eller så sa du inte vart du ville gå. \n'
 
 
@@ -205,11 +222,11 @@ room_descriptions = {
   'Du kollar runt och ser att du är i en dammig mörk gammal källare. Förutom de mystisak svamparna i ett av hörnen ser du  en tavla och en hink på golvet. Du ser också att finns en dörr längst bort i rummet.\n',
   rooms[1]: 'Du kollar runt och är på en gammal trappa. Varje steg du tar ger ett knakande ljud. Framför dig är en dörr.\n',
   rooms[2]: 'Du står i en hall i en lång hall med alla fönster täckta av fastspikade träplankor så att det är ingen chans för dig att komma ut. Framför dig är en stort skåp. Du kan fortsäta höger eller vänster genom hallen.',
-  rooms[3]: 'Du ser två dörrar, en till vänster och en till höger',
-  rooms[4]: 'Du befinner dig i ett mörkt rum. Du ser din farbror sovandes på sin säng i hörnet av rummet.',
-  rooms[5]: 'Du befinner dig i köket. Du ser massor av knivmärken runt hela köksväggarna. Det som står ut mest i köket är ett kylskåp.',
-  rooms[6]: 'Du befinner dig i vardagsrummet där alla fönster är inspikade av träplankor. Det som står ut mest i rummet är en tavla sne tavla och en stor hylla.',
-  rooms[7]: 'Du befinner dig i garaget men du ser ingen utgång. Du känner lukten bitter bensin lukt. Det som står ut mest är den blåa bilen framför dig.'
+  rooms[3]: 'Du ser två dörrar, en till vänster och en till höger.\n',
+  rooms[4]: 'Du befinner dig i ett mörkt rum. Du ser din farbror sovandes på sin säng i hörnet av rummet.\n',
+  rooms[5]: 'Du befinner dig i köket. Du ser massor av knivmärken runt hela köksväggarna. Det som står ut mest i köket är ett kylskåp.\n',
+  rooms[6]: 'Du befinner dig i vardagsrummet där alla fönster är inspikade av träplankor. Det som står ut mest i rummet är en tavla sne tavla och en stor hylla.\n',
+  rooms[7]: 'Du befinner dig i garaget men du ser ingen utgång. Du känner lukten bitter bensin lukt. Det som står ut mest är den blåa bilen framför dig.\n'
 }
 
 
@@ -223,13 +240,13 @@ item_info = [{
       'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod.'},
    {},
    {
-      'farbror' : 'Du går fram smyger fram mot din farbror för en närmare titt. Det sista steget du tar ger ett högt knackade ljud från trägolvet och väcker farbrorn så att han reser sig genast.'},
+      'farbror' : 'Du går fram smyger fram mot din farbror för en närmare titt. Det sista steget du tar ger ett högt knackade ljud från trägolvet och väcker farbrorn så att han reser sig genast.\n event uncle'},
    {
-      'kylskåp' : 'Du öppnar kylskåpet och finner den fylld med ost. Undra vad du kan göra med osten?'
+      'kylskåp' : 'Du öppnar kylskåpet och finner den fylld med ost. Undra vad du kan göra med osten? event cheese'
    },
    {
-      'tavla' : 'Du inspekterar tavlan av Lama. Men du märker att den inte sitter helt rätt och tar av tavlan från väggen. Bakom tavlan finner du ett skåp som kräver en kod. Vad kan koden vara?',
-      'hylla' : 'Du inspekterar hyllan och finner en papperslapp. På lappen står det "Insert matte uppgift". Vad kan detta vara för?'
+      'tavla' : 'Du inspekterar tavlan. Den föreställer en lama. Du märker att den inte sitter helt rätt och tar av tavlan från väggen. Bakom tavlan finner du ett skåp som kräver en kod. Vad kan koden vara? event painting',
+      'hylla' : 'Du inspekterar hyllan och finner en papperslapp. På lappen står det "Insert matte uppgift". Vad kan detta vara för?\n'
    },
    {}]
 
