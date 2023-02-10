@@ -101,7 +101,7 @@ def show_inventory():
 
 
 def change_room(direction):
-   ''
+   'byter till rum baseat på vad spelaren'
    global current_room
    global item_info
 
@@ -113,31 +113,30 @@ def change_room(direction):
          else:
             return 'Dörren är låst. Du behöver en nyckel för att öppna den.\n'
 
-   elif current_room == 1:
+   if current_room == 1:
       if 'nästa' in direction:
          current_room += 1
          return 'Du går upp för trappan och genom dörren.\n'
 
-   elif current_room == 1 or current_room == 2:
-      if 'tillbak' in direction:
-         if current_room == 1:
-            current_room -= 1
-            return 'Du går tillbaka.\n'
+   if 'tillbak' in direction:
+      if current_room == 1 or current_room == 2 or current_room  == 3:
+         current_room -= 1
+         return 'Du går tillbaka.\n'
 
-   elif current_room == 2:
+
+   if current_room == 2:
       if 'höger' in direction:
-         current_room = 5
+         current_room += 1
          return 'Du går in genom dörren till höger.\n'
       elif 'vänster' in direction:
          current_room += 1
 
-   elif current_room == 5:
+   if current_room == 5:
       if 'nästa' in direction:
          current_room += 1
          return 'Du går genom dörren ut ur köket.\n '
       
-   else:
-      return 'Du måste säga vart du vill gå.\n'
+   return 'Det finns inget rum där eller så sa du inte vart du ville gå. \n'
 
 
 #Deklration av listot, dictionaries osv
@@ -274,9 +273,8 @@ if __name__ == '__main__':
       
       }
       ######################################################################################################
-
+      print(current_room)
       if player_input[0] in commands:
-         print(type(commands[player_input[0]]))
          if 'event' in str(commands[player_input[0]]):
             player_input = commands[player_input[0]].split('event')
             print(player_input[0])
