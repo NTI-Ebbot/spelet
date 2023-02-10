@@ -152,6 +152,20 @@ def events(event):
          elif 'nej' in player_input:
             print('Det kanske finns något viktigt bakom låset')
             break
+        
+  if 'cabinet' in event:
+   while True:
+         player_input = input('Vill du skriva in koden? Ja/Nej\n').lower()
+         if 'ja' in player_input:
+            player_input = input('Vad är koden?')
+            if '0327' player_input:
+            print('Korrekt kod. Du hittade en bilnyckel')
+            inventory.append('bilnyckel')
+            else:
+            print('Inkorrekt kod')
+         elif 'nej' in player_input:
+            print('Det kanske finns något viktigt bakom låset')
+            break
 
 
 def show_inventory():
