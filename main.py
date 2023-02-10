@@ -104,32 +104,40 @@ def change_room(direction):
    ''
    global current_room
    global item_info
-   if direction != None:
-      if current_room == 0:
-         if 'nästa' in direction:
-            if 'källarnyckel' in  inventory:
-               current_room += 1
-               return 'Du låser upp och öppnar dörren och går igenom.\n'
-            else:
-               return 'Dörren är låst. Du behöver en nyckel för att öppna den.\n'
 
-      if current_room == 1:
+   if current_room == 0:
+      if 'nästa' in direction:
+         if 'källarnyckel' in  inventory:
+            current_room += 1
+            return 'Du låser upp och öppnar dörren och går igenom.\n'
+         else:
+            return 'Dörren är låst. Du behöver en nyckel för att öppna den.\n'
+
+   elif current_room == 1:
+      if 'nästa' in direction:
+         current_room += 1
          return 'Du går upp för trappan och genom dörren.\n'
 
-      if current_room == 0 or current_room == 1 or current_room == 2:
-         if 'tillbak' in direction:
-            if current_room == 1:
-               current_room -= 1
-               return 'Du går tillbaka.\n'
+   elif current_room == 1 or current_room == 2:
+      if 'tillbak' in direction:
+         if current_room == 1:
+            current_room -= 1
+            return 'Du går tillbaka.\n'
 
-      if current_room == 1:
-         if 'höger' in direction:
-            current_room = 6
-            return 'Du går in genom dörren till höger.\n'
-         elif 'vänster' in direction:
-            current_room += 1
-      else:
-         return 'Du måste säga vart du vill gå.\n'
+   elif current_room == 2:
+      if 'höger' in direction:
+         current_room = 5
+         return 'Du går in genom dörren till höger.\n'
+      elif 'vänster' in direction:
+         current_room += 1
+
+   elif current_room == 5:
+      if 'nästa' in direction:
+         current_room += 1
+         return 'Du går genom dörren ut ur köket.\n '
+      
+   else:
+      return 'Du måste säga vart du vill gå.\n'
 
 
 #Deklration av listot, dictionaries osv
@@ -148,9 +156,9 @@ room_descriptions = {
   rooms[1]: 'Du kollar runt och är på en gammal trappa. Varje steg du tar ger ett knakande ljud. Framför dig är en dörr.\n',
   rooms[2]: 'Du står i en lång hall. Framför dig är en byrå. ',
   rooms[3]: 'Du ser två dörrar, en till vänster och en till höger',
-  rooms[4]: 'Vardagsrummet',
-  rooms[5]: 'Sovrummet',
-  rooms[6]: 'Köket',
+  rooms[4]: 'Sovrummet',
+  rooms[5]: 'Köket',
+  rooms[6]: 'Vardagsrum',
   rooms[7]: 'Garaget'
 }
 
@@ -164,7 +172,9 @@ item_info = [
    {
    'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305',
    },
-{}]
+{},
+{},
+]
 
 
 
@@ -251,6 +261,7 @@ if __name__ == '__main__':
       'kolla': room_descriptions[rooms[current_room]],
       'hjälp' : controls,
       'inspektera': inspect(player_input[1]),
+      '§': inspect(player_input[1]),
       'i' : ', '.join(inventory),
       'gå' : change_room(player_input[1]),
       
@@ -258,7 +269,8 @@ if __name__ == '__main__':
       ######################################################################################################
 
       if player_input[0] in commands:
-         if 'event' in commands[player_input[0]]:
+         print(type(commands[player_input[0]]))
+         if 'event' in str(commands[player_input[0]]):
             player_input = commands[player_input[0]].split('event')
             print(player_input[0])
             events(player_input[1])

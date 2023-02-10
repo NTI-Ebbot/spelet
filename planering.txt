@@ -1,5 +1,5 @@
 #Start
-Fråga användaren om den vill spela(eventuellt fråga om den vill ladda ett tidigare sparat spel)
+Fråga användaren om den vill spela
 Förklara backstoryn för användaren och hur man spelar
 
 #Alternativ i rummet

@@ -87,11 +87,14 @@ def play():
             choice = int(choice)
         except:
             continue
-
-        if(check_position(choice)):
-            board[choice] = mark
-            player+=1
-            check_win()
+        
+        if choice < 10 and choice > 0:
+            if(check_position(choice)):
+                board[choice] = mark
+                player+=1
+                check_win()
+        else:
+            continue
 
     os.system('cls')
     draw_board()
