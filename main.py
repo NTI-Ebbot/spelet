@@ -48,7 +48,7 @@ def split_line_print(text, seperator, sleep_tine, end='\n'):
 
 
 def game_over(tip):
-   'game over skärm med ett tips baserat på hur du förlorade'
+   ''
    os.system('cls')
    split_line_print(f'''
  _____                  _____             §
@@ -132,11 +132,25 @@ def events(event):
          player_input = input('Vill du ta upp osten? Ja/Nej\n').lower()
          if 'ja' in player_input:
             print('Undra vad du ska göra med osten?')
+            inventory.append('ost') 
             break
-         if 'nej' in player_input:
+         elif 'nej' in player_input:
             print('Osten kanske är viktig')
             break
             
+   if 'painting' in evnet:
+      while True:
+         player_input = input('Vill du skriva in koden? Ja/Nej\n').lower()
+         if 'ja' in player_input:
+            player_input = input('Vad är koden?')
+            if '8305' player_input:
+            print('Korrekt kod. Du hittade en pistol')
+            inventory.append('pistol')
+            else:
+            print('Inkorrekt kod')
+         elif 'nej' in player_input:
+            print('Det kanske finns något viktigt bakom låset')
+            break
 
 
 def show_inventory():
@@ -179,7 +193,7 @@ def change_room(direction):
 
    if current_room == 2:
       if 'höger' in direction:
-         current_room = 5
+         current_room += 1
          return 'Du går in genom dörren till höger.\n'
       elif 'vänster' in direction:
          current_room += 1
@@ -235,9 +249,9 @@ item_info = [{
    'hink' : 'Hinken ser gammal och rostig ut. I den hittar en råtta. event rat',
    'svamp' : 'Det är tre små svampar. Det ser nästan ut som att de lyser i mörkret. event shrooms'
    },
-   {},
    {
-      'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod.'},
+   'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod.'
+   },
    {},
    {
       'farbror' : 'Du går fram smyger fram mot din farbror för en närmare titt. Det sista steget du tar ger ett högt knackade ljud från trägolvet och väcker farbrorn så att han reser sig genast.\n event uncle'},
