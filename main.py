@@ -138,8 +138,7 @@ def change_room(direction):
 inventory = []
 
 rooms = [
-  'källaren', 'trappan', 'vardagsrummet', 'hallen', 'sovrummet', 'köket',
-  'garaget', ''
+  'källaren', 'trappan', 'hallen', 'hallen2', 'sovrummet', 'köket','vardagsrummet', 'garaget'
 ]
 
 room_descriptions = {
