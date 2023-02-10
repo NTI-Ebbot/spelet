@@ -47,7 +47,7 @@ def split_line_print(text, seperator, sleep_tine, end='\n'):
       sleep(sleep_tine)
 
 def game_over(tip):
-   ''
+   'game over skärm med ett tips baserat på hur du förlorade'
    os.system('cls')
    split_line_print(f'''
  _____                  _____             §
@@ -57,6 +57,19 @@ def game_over(tip):
 Tips: {tip}!                             
    ''', '§', 0.2, '')
    exit()
+
+
+def victory(victory_splash):
+   'victory skärm med en text om hur du vann'
+   os.system('cls')
+   split_line_print(f'''                                
+ _____ _     _               §
+|  |  |_|___| |_ ___ ___ _ _ §
+|  |  | |  _|  _| . |  _| | |§
+ \___/|_|___|_| |___|_| |_  |§
+                        |___|§
+{victory_splash}
+   ''', '§', 0.2)
 
 
 
@@ -126,10 +139,21 @@ def change_room(direction):
 
    if current_room == 2:
       if 'höger' in direction:
-         current_room += 1
+         current_room = 5
          return 'Du går in genom dörren till höger.\n'
       elif 'vänster' in direction:
          current_room += 1
+
+   if current_room == 3:
+      if 'höger' in direction:
+         current_room += 1
+         return 'Du går in genom dörren åt höger. \n'
+      
+      elif 'vänster' in direction and 'husnyckel' not in inventory:
+         return 'Ser ut som ytterdörren, men den är låst. Du kanske kan hitta nyckeln någonstans.\n'
+
+      elif 'vänster' in direction and 'husnyckel' in inventory:
+         return 'Du låser upp dörren och flyr ifrån huset.\n'
 
    if current_room == 5:
       if 'nästa' in direction:
@@ -166,19 +190,18 @@ item_info = [{
    'hink' : 'Hinken ser gammal och rostig ut. I den hittar en råtta. event rat',
    'svamp' : 'Det är tre små svampar. Det ser nästan ut som att de lyser i mörkret. event shrooms'
    },
-   {
-   'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod.'
-   },
    {},
    {
-   'farbror' : 'Du går fram smyger fram mot din farbror för en närmare titt. Det sista steget du tar ger ett högt knackade ljud från trägolvet och väcker farbrorn så att han reser sig genast.'
+      'skåp' : 'Du inspekterar skåpet och hittar en bild på en vit lurvig hund. Du lägger en nämare titt och vänder på bilden och ser nummerna 8305. Du lägger en närmare titt på skåpet och hittar ett låst fack som kräver en kod.'},
+   {},
+   {
+      'farbror' : 'Du går fram smyger fram mot din farbror för en närmare titt. Det sista steget du tar ger ett högt knackade ljud från trägolvet och väcker farbrorn så att han reser sig genast.'},
+   {
+      'kylskåp' : 'Du öppnar kylskåpet och finner den fylld med ost. Undra vad du kan göra med osten?'
    },
    {
-   'kylskåp' : 'Du öppnar kylskåpet och finner den fylld med ost. Undra vad du kan göra med osten?'
-   },
-   {
-   'tavla' : 'Du inspekterar tavlan av Lama. Men du märker att den inte sitter helt rätt och tar av tavlan från väggen. Bakom tavlan finner du ett skåp som kräver en kod. Vad kan koden vara?',
-   'hylla' : 'Du inspekterar hyllan och finner en papperslapp. På lappen står det "Insert matte uppgift". Vad kan detta vara för?'
+      'tavla' : 'Du inspekterar tavlan av Lama. Men du märker att den inte sitter helt rätt och tar av tavlan från väggen. Bakom tavlan finner du ett skåp som kräver en kod. Vad kan koden vara?',
+      'hylla' : 'Du inspekterar hyllan och finner en papperslapp. På lappen står det "Insert matte uppgift". Vad kan detta vara för?'
    },
    {}]
 
