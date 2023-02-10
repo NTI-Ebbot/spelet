@@ -153,16 +153,16 @@ def events(event):
             print('Det kanske finns något viktigt bakom låset')
             break
         
-  if 'cabinet' in event:
-   while True:
+   if 'cabinet' in event:
+    while True:
          player_input = input('Vill du skriva in koden? Ja/Nej\n').lower()
          if 'ja' in player_input:
             player_input = input('Vad är koden?')
-            if '0327' player_input:
-            print('Korrekt kod. Du hittade en bilnyckel')
-            inventory.append('bilnyckel')
+            if '0327' in player_input:
+               print('Korrekt kod. Du hittade en bilnyckel')
+               inventory.append('bilnyckel')
             else:
-            print('Inkorrekt kod')
+               print('Inkorrekt kod')
          elif 'nej' in player_input:
             print('Det kanske finns något viktigt bakom låset')
             break
@@ -208,7 +208,7 @@ def change_room(direction):
 
    if current_room == 2:
       if 'höger' in direction:
-         current_room += 5
+         current_room = 5
          return 'Du går in genom dörren till höger.\n'
       elif 'vänster' in direction:
          current_room += 1
