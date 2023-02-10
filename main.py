@@ -138,16 +138,16 @@ def events(event):
             print('Osten kanske är viktig')
             break
             
-   if 'painting' in evnet:
+   if 'painting' in event:
       while True:
          player_input = input('Vill du skriva in koden? Ja/Nej\n').lower()
          if 'ja' in player_input:
             player_input = input('Vad är koden?')
-            if '8305' player_input:
-            print('Korrekt kod. Du hittade en pistol')
-            inventory.append('pistol')
+            if '8305' in player_input:
+               print('Korrekt kod. Du hittade en pistol')
+               inventory.append('pistol')
             else:
-            print('Inkorrekt kod')
+               print('Inkorrekt kod')
          elif 'nej' in player_input:
             print('Det kanske finns något viktigt bakom låset')
             break
