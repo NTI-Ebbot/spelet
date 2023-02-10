@@ -99,6 +99,7 @@ def events(event):
          if 'ja' in player_input:
             print()
 
+
    if 'shrooms' in event:
       while True:
          player_input = input('Vill du äta dem? Ja/Nej\n').lower()
@@ -193,7 +194,7 @@ def change_room(direction):
 
    if current_room == 2:
       if 'höger' in direction:
-         current_room += 1
+         current_room += 5
          return 'Du går in genom dörren till höger.\n'
       elif 'vänster' in direction:
          current_room += 1
