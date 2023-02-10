@@ -191,7 +191,7 @@ def events(event):
                print('ok')
          else:
             print('Du behöver en bilnyckel för att öppna bilen.\n')
-
+            break
 
 def show_inventory():
    'Returnerar vad som finns i listan "inventory" som en string'
@@ -292,7 +292,7 @@ room_descriptions = {
   rooms[2]: 'Du står i en hall i en lång hall med alla fönster täckta av fastspikade träplankor så att det är ingen chans för dig att komma ut. Framför dig är en stort skåp. Du kan fortsäta höger eller vänster genom hallen.\n',
   rooms[3]: 'Du ser två dörrar, en till vänster och en till höger.\n',
   rooms[4]: 'Du befinner dig i ett mörkt rum. Du ser din farbror sovandes på sin säng i hörnet av rummet.\n',
-  rooms[5]: 'Du befinner dig i köket. Du ser massor av knivmärken runt hela köksväggarna. Det som står ut mest i köket är ett kylskåp. Det finns en döör åt vänster och en åt höger.\n',
+  rooms[5]: 'Du befinner dig i köket. Du ser massor av knivmärken runt hela köksväggarna. Det som står ut mest i köket är ett kylskåp. Det finns en dörr åt vänster och en åt höger. \n',
   rooms[6]: 'Du befinner dig i vardagsrummet där alla fönster är inspikade av träplankor. Det som står ut mest i rummet är en tavla sne tavla och en stor hylla.\n',
   rooms[7]: 'Du befinner dig i garaget men du ser ingen utgång. Du känner lukten bitter bensin lukt. Det som står ut mest är den blåa bilen framför dig.\n'
 }
@@ -319,7 +319,7 @@ item_info = [{
       'hylla' : 'Du inspekterar hyllan och finner en papperslapp. På lappen står det "3(597 + 16^2 * 2)". Vad kan detta vara för?\n'
    },
    {
-      'bil' : ''
+      'bil' : 'Det är en blå volvo. event car'
    }]
 
 
